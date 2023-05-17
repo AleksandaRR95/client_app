@@ -63,7 +63,11 @@ function AuthForm() {
       console.log("Došlo je do greške:", error);
     }
   };
-  
+ /*  const handleLogout = () => {
+    localStorage.removeItem("token"); // Uklonite token iz lokalnog skladišta prilikom odjave
+    dispatch(logout()); // Dispečujte akciju za odjavu
+    // Dodajte logiku za preusmeravanje na početnu stranicu ili drugu odgovarajuću akciju
+  }; */
   return (
     <Fragment>
       <form onSubmit={handleFormSubmit}>

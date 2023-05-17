@@ -4,24 +4,32 @@ import DodajPaket from "./pages/DodajPaket";
 import PaketiData from "./components/PaketiData";
 import "./css/App.css";
 import AuthForm from "./components/AuthForm";
+import Root from "./pages/Root";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />,
-  },
-  {
-    path: "/paketi",
-    element: <DodajPaket />,
-  },
-  {
-    path: "/paketiData",
-    element: <PaketiData />,
-  },
-  {
-    path: "/auth",
-    element: <AuthForm />,
-  },
+    element: <Root/>,
+    children:[
+      {
+        index: true,
+        element: <HomePage />,
+      },
+      {
+        path: "/dodajPaket",
+        element: <DodajPaket />,
+      },
+      {
+        path: "/paketiData",
+        element: <PaketiData />,
+      },
+      {
+        path: "/auth",
+        element: <AuthForm />,
+      },
+    ]
+  }
+  
 ]);
 
 function App() {
@@ -29,8 +37,6 @@ function App() {
     <div className="centered-container">
       <div className="text-center">
         <RouterProvider router={router} />
-        <PaketiData />
-        <DodajPaket />
       </div>
     </div>
   );
