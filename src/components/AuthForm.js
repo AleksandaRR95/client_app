@@ -1,8 +1,12 @@
 import React, { Fragment, useState } from "react";
+import { useDispatch } from "react-redux";
+import { login, register } from "../store/auth-slice";
 
 function AuthForm() {
   var loginEndpoint = "https://localhost:44359/api/authentication/login";
   var registerEndpoint = "https://localhost:44359/api/authentication/register";
+
+  const dispatch = useDispatch();
 
   const [isRegistered, setIsRegistered] = useState(true);
   const [formData, setFormData] = useState({
@@ -39,10 +43,12 @@ function AuthForm() {
         if (isRegistered) {
           // Prijavljivanje uspešno
           localStorage.setItem("token", data.token);
-          // Redirektujte korisnika na zeljenu stranicu
+          dispatch(login(data.token)); // Dispečujte akciju za prijavljivanje
+          // Redirektujte korisnika na željenu stranicu
           // history.push("/dashboard");
         } else {
           // Registracija uspešna
+          dispatch(register(data.token)); // Dispečujte akciju za registraciju
           // Redirektujte korisnika na stranicu za prijavljivanje
           // history.push("/login");
         }
@@ -57,7 +63,7 @@ function AuthForm() {
       console.log("Došlo je do greške:", error);
     }
   };
-
+  
   return (
     <Fragment>
       <form onSubmit={handleFormSubmit}>
