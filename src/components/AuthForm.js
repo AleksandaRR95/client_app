@@ -1,13 +1,13 @@
 import React, { Fragment, useState } from "react";
 import { useDispatch } from "react-redux";
-import { login, register } from "../store/auth-slice";
-
+import { login, register} from "../store/auth-slice";
+import { useNavigate } from "react-router-dom";
 function AuthForm() {
   var loginEndpoint = "https://localhost:44359/api/authentication/login";
   var registerEndpoint = "https://localhost:44359/api/authentication/register";
 
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const [isRegistered, setIsRegistered] = useState(true);
   const [formData, setFormData] = useState({
     Username: "",
@@ -45,12 +45,12 @@ function AuthForm() {
           localStorage.setItem("token", data.token);
           dispatch(login(data.token)); // Dispečujte akciju za prijavljivanje
           // Redirektujte korisnika na željenu stranicu
-          // history.push("/dashboard");
+          navigate("/");
         } else {
           // Registracija uspešna
           dispatch(register(data.token)); // Dispečujte akciju za registraciju
           // Redirektujte korisnika na stranicu za prijavljivanje
-          // history.push("/login");
+          //navigate("/login");
         }
       } else {
         console.log(
@@ -63,11 +63,11 @@ function AuthForm() {
       console.log("Došlo je do greške:", error);
     }
   };
- /*  const handleLogout = () => {
+/*  const handleLogout = () => {
     localStorage.removeItem("token"); // Uklonite token iz lokalnog skladišta prilikom odjave
     dispatch(logout()); // Dispečujte akciju za odjavu
     // Dodajte logiku za preusmeravanje na početnu stranicu ili drugu odgovarajuću akciju
-  }; */
+  };  */
   return (
     <Fragment>
       <form onSubmit={handleFormSubmit}>

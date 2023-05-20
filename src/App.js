@@ -16,15 +16,15 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "/dodajPaket",
+        path: "dodajPaket",
         element: <DodajPaket />,
       },
       {
-        path: "/paketiData",
+        path: "paketiData",
         element: <PaketiData />,
       },
       {
-        path: "/auth",
+        path: "auth",
         element: <AuthForm />,
       },
     ]
@@ -33,6 +33,7 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  
   return (
     <div className="centered-container">
       <div className="text-center">

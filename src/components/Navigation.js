@@ -1,7 +1,16 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import { logout } from "../store/auth-slice";
 function Navigation() {
+  const jwtToken = localStorage.getItem("token");
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    dispatch(logout());
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
@@ -27,22 +36,40 @@ function Navigation() {
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink to="/paketiData" className="nav-link">
+              <NavLink to="paketiData" className="nav-link">
                 Paketi
               </NavLink>
             </li>
-            <li className="nav-item">
-              <NavLink to="/dodajPaket" className="nav-link">
-                Dodaj paket
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/auth" className="nav-link">
-                Registracija / Login
-              </NavLink>
-            </li>
+            {jwtToken ? (
+              <li className="nav-item">
+                <NavLink to="dodajPaket" className="nav-link">
+                  Dodaj paket
+                </NavLink>
+              </li>
+            ) : (
+              ""
+            )}
+
+            {!jwtToken ? (
+              <li className="nav-item">
+                <NavLink to="auth" className="nav-link">
+                  Registracija / Login
+                </NavLink>
+              </li>
+            ) : (
+              ""
+            )}
           </ul>
         </div>
+        {jwtToken && (
+          <button
+            type="button"
+            className="btn btn-link text-light"
+            onClick={handleLogout}
+          >
+            Odjavi se
+          </button>
+        )}
       </div>
     </nav>
   );
