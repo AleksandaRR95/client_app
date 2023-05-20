@@ -1,13 +1,14 @@
 import React, { useState, useEffect, Fragment } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useDispatch } from "react-redux";
-import { deletePaket } from "../store/paketi-slice";
+import { useDispatch, useSelector } from "react-redux";
+import { deletePaket, searchPaketi } from "../store/paketi-slice";
 
 function PaketiData() {
   const jwtToken = localStorage.getItem("token");
 
   const dispatch = useDispatch();
-  const [paketi, setPaketi] = useState([]);
+  const paketi = useSelector((state) => state.paketi);
+  const [searchResults, setSearchResults] = useState([]);
 
   const fetchPaketi = async () => {
     try {
@@ -17,7 +18,8 @@ function PaketiData() {
         },
       });
       const data = await response.json();
-      setPaketi(data);
+      dispatch(searchPaketi(data));
+      
     } catch (error) {
       console.error(error);
     }
@@ -42,6 +44,7 @@ function PaketiData() {
         });
 
         dispatch(deletePaket(paketId));
+
         fetchPaketi();
         console.log("Paket uspešno obrisan.");
       } catch (error) {
@@ -65,7 +68,7 @@ function PaketiData() {
           </tr>
         </thead>
         <tbody>
-          {paketi.map((paket) => (
+          {(searchResults.length > 0 ? searchResults : paketi).map((paket) => (
             <tr key={paket.id}>
               <td>{paket.posiljalac}</td>
               <td>{paket.primalac}</td>

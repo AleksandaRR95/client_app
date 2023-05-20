@@ -2,8 +2,10 @@ import { useState } from "react";
 import Kuriri from "./Kuriri";
 import { useDispatch } from "react-redux";
 import { addPaket } from "../store/paketi-slice";
+import { useNavigate } from "react-router-dom";
 
 function PaketiForm(props) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     Posiljalac: "",
@@ -33,6 +35,30 @@ function PaketiForm(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (formData.Posiljalac.length <= 2 || formData.Posiljalac.length > 90) {
+      window.alert("Posiljalac mora biti dužine od 2 do 90 karaktera.");
+      return;
+    }
+
+    // Validacija primaoca
+    if (formData.Primalac.length <= 2 || formData.Primalac.length > 90) {
+      window.alert("Primalac mora biti dužine od 2 do 90 karaktera.");
+      return;
+    }
+
+    // Validacija težine
+    if (formData.Tezina < 0.1 || formData.Tezina > 9.99) {
+      window.alert("Težina mora biti između 0.1 i 9.99.");
+      return;
+    }
+
+    // Validacija cene
+    if (formData.CenaPostarine < 250 || formData.CenaPostarine > 10000) {
+      window.alert("Cena mora biti između 250 i 10000.");
+      return;
+    }
+
     const updatedFormData = {
       ...formData,
       KurirId: selectedKurirId,
@@ -60,6 +86,8 @@ function PaketiForm(props) {
           KurirId: 0,
         });
         console.log("Paket uspešno dodat.");
+        window.alert("Paket uspešno dodat.");
+        navigate("../paketiData");
       } else {
         console.log("Došlo je do greške prilikom slanja zahteva.");
       }
@@ -82,6 +110,7 @@ function PaketiForm(props) {
           className="form-control"
           value={formData.Posiljalac}
           onChange={handleInputChange}
+          required
         />
       </div>
       <div className="mb-3">
@@ -95,6 +124,7 @@ function PaketiForm(props) {
           className="form-control"
           value={formData.Primalac}
           onChange={handleInputChange}
+          required
         />
       </div>
       <div className="mb-3">
@@ -108,6 +138,7 @@ function PaketiForm(props) {
           className="form-control"
           value={formData.Tezina}
           onChange={handleInputChange}
+          required
         />
       </div>
       <div className="mb-3">
@@ -121,6 +152,7 @@ function PaketiForm(props) {
           className="form-control"
           value={formData.CenaPostarine}
           onChange={handleInputChange}
+          required
         />
       </div>
       <div className="mb-3">

@@ -18,11 +18,14 @@ const paketiSlice = createSlice({
       if (index !== -1) {
         state[index] = updatedPaket;
       }
-    }
+    },
+    searchPaketi: (state, action) => {
+      return action.payload;
+    },
   },
 });
 
-export const { addPaket, deletePaket } = paketiSlice.actions;
+export const { addPaket, deletePaket, searchPaketi } = paketiSlice.actions;
 
 
 export default paketiSlice.reducer;

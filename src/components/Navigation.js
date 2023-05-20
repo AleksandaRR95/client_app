@@ -49,6 +49,15 @@ function Navigation() {
             ) : (
               ""
             )}
+             {jwtToken ? (
+              <li className="nav-item">
+                <NavLink to="PretragaPaketa" className="nav-link">
+                  Pretraga paketa
+                </NavLink>
+              </li>
+            ) : (
+              ""
+            )}
 
             {!jwtToken ? (
               <li className="nav-item">
