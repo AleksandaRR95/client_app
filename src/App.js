@@ -7,10 +7,12 @@ import AuthForm from "./components/AuthForm";
 import Root from "./pages/Root";
 import { useEffect } from "react";
 import PretragaPaketa from "./pages/PretragaPaketa";
+import ErrorPage from "./pages/Error";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root/>,
+    errorElement: <ErrorPage/>,
     children:[
       {
         index: true,
