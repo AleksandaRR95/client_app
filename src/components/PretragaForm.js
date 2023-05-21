@@ -22,6 +22,18 @@ function PretragaForm() {
 
     const { najmanje, najvise } = formData;
 
+    if (najmanje < 0.1 || najmanje > 9.99) {
+      alert("Najmanja vrednost mora biti u opsegu 0.1 - 9.99");
+      return false;
+    } else if (najvise <= 0.1 || najvise > 9.99) {
+      alert("Najveća vrednost mora biti u opsegu 0.1 - 9.99");
+      return false;
+    } else if (najmanje > najvise) {
+      alert("Najmanja vrednost ne sme biti veća od najveće vrednosti.");
+      return false;
+    }
+
+
     try {
       const response = await fetch("https://localhost:44359/api/pretraga", {
         method: "POST",

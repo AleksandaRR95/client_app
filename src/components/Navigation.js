@@ -9,6 +9,7 @@ function Navigation() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     dispatch(logout());
+    window.alert("Odjavljeni ste sa sistema.");
   };
 
   return (
@@ -49,7 +50,7 @@ function Navigation() {
             ) : (
               ""
             )}
-             {jwtToken ? (
+            {jwtToken ? (
               <li className="nav-item">
                 <NavLink to="PretragaPaketa" className="nav-link">
                   Pretraga paketa

@@ -39,18 +39,18 @@ function AuthForm() {
       if (response.ok) {
         const data = await response.json();
         console.log(data);
-
+        window.alert('Uspesna prijava na sistem.')
         if (isRegistered) {
           // Prijavljivanje uspešno
           localStorage.setItem("token", data.token);
-          dispatch(login(data.token)); // Dispečujte akciju za prijavljivanje
-          // Redirektujte korisnika na željenu stranicu
+          dispatch(login(data.token));
+          //Redirekcija
           navigate("/");
         } else {
-          // Registracija uspešna
-          dispatch(register(data.token)); // Dispečujte akciju za registraciju
-          // Redirektujte korisnika na stranicu za prijavljivanje
-          //navigate("/login");
+          
+          dispatch(register(data.token)); 
+          
+          
         }
       } else {
         console.log(
